@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <style>
+        h2 {
+            text-align:center;
+        }
+        body  {
+               background-color:grey;
+               padding:20 px
+        }
+         .required::After {
+         content: "*";
+         color:red
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+            $(document).ready(function() {
+              $("#submit_button").click(function() {
+                  var formData = {
+                  FNAME:$("#FNAME").val(),
+                  LNAME:$("#LNAME").val(),
+                  email:$("#email").val(),
+                  password:$("#password").val(),
+                  DOB:$("#DOB").val(),
+                  Contact:$("#Contact").val(),
+                  Document:$("#Document").val(),
+              };
+              $.ajax({
+                   type:"POST",
+                   url:"/submit_form",
+                   data:formData,
+                   success:function(response) {
+                       $("#response_message").html(response);
+                   },
+                   error:function(xhr,status,error) {
+                       console.error(xhr.responseText);
+                       }
+                   });
+               });
+            });
+    </script>
+</head>
+<body>
+<form  action="/submit_form" method ="POST">
+    <h2><b><u>Candidate Information Form</u></b></h2>
+    <label for = "FNAME" class = required><b>First Name</b></label><br>
+    <input type = text id = "FNAME" name = "FNAME"><br><br>
+    <label for = "LNAME" class = required><b>Last Name</b></label><br>
+    <input type = text id = "LNAME" name = "LNAME"><br><br>
+    <label for = "email" class = required><b>Email Id</b></label><br>
+    <input type = email id = "email" name = "email"><br><br>
+    <label for = "password" class = required><b>Password</b></label><br>
+    <input type = password id = "password" name = "password"><br><br>
+    <label for = "DOB" class="required"><b>Date of Birth</b></label><br>
+    <input type = date id = "DOB" name = "DOB"><br><br>
+    <label for = "Contact" class = required><b>Contact Detail</b></label><br>
+    <input type = tel id = "Contact" name = "Contact" maxlength="10" pattern="[0-9]{10}" placeholder="Please enter a 10 digit number"><br><br>
+    <label for = "Document"><b>Document Upload</b></label><br>
+    <input type = file id = "Document" name="Document"><br><br>
+    <button type ="button" id="submit_button">Submit</button>
+    <button type = reset>Reset</button>
+</form>
+<div id = "response_message"></div>
+
+</body>
+</html>
